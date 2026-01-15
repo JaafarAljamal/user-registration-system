@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class UserTableTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function users_table_has_expected_columns()
     {
         $this -> assertTrue(Schema::hasTable('users'));
