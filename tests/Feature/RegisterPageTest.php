@@ -4,22 +4,62 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 
+/**
+ * Class RegisterPageTest
+ * This class handles feature tests for the user registration process.
+ */
 class RegisterPageTest extends TestCase
 {
+    /**
+     * Test if the registration page returns a successful response.
+     *
+     * @return void
+     */
     public function test_register_page_is_accessible(): void
     {
+        // Act: Visit the registration route
         $response = $this->get('/register');
+
+        // Assert: Check if status is OK and the heading is visible
         $response -> assertStatus(200);
         $response -> assertSee('Register');
     }
 
+    /**
+     * Test if all necessary input fields are rendered on the registration page.
+     *
+     * @return void
+     */
     public function test_register_page_fields_are_visible(): void
     {
+        // Act: Visit the registration route
         $response = $this -> get('/register');
 
+        // Assert: Verify visibility of essential form labels/fields
         $response -> assertSee('Name');
         $response -> assertSee('Email');
         $response -> assertSee('Password');
         $response -> assertSee('Register');
+    }
+
+    /**
+     * Test if a user can successfully register with valid data.
+     *
+     * @return void
+     */
+    public function test_user_can_register(): void {
+        // Act: Submit the registration form with user data
+        $response = $this->post("/register", [
+            "name" => "Jaafar",
+            "email" => "jaafar@example.com",
+            "password" => "secret123"
+        ]);
+
+        // Assert: Verify redirection (successful submission)
+        $response->assertStatus(302);
+        // Assert: Check if the user record exists in the database
+        $this->assertDatabaseHas("user", [
+            "email" => "jaafar@example.com"
+        ]);
     }
 }
