@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
@@ -21,8 +22,8 @@ class RegisterPageTest extends TestCase
         $response = $this->get('/register');
 
         // Assert: Check if status is OK and the heading is visible
-        $response -> assertStatus(200);
-        $response -> assertSee('Register');
+        $response->assertStatus(200);
+        $response->assertSee('Register');
     }
 
     /**
@@ -33,24 +34,26 @@ class RegisterPageTest extends TestCase
     public function test_register_page_fields_are_visible(): void
     {
         // Act: Visit the registration route
-        $response = $this -> get('/register');
+        $response = $this->get('/register');
 
         // Assert: Verify visibility of essential form labels/fields
-        $response -> assertSee('Name');
-        $response -> assertSee('Email');
-        $response -> assertSee('Password');
-        $response -> assertSee('Register');
+        $response->assertSee('Name');
+        $response->assertSee('Email');
+        $response->assertSee('Password');
+        $response->assertSee('Register');
     }
 
+    use RefreshDatabase;
     /**
      * Test if a user can successfully register with valid data.
      *
      * @return void
      */
-    public function test_user_can_register(): void {
+    public function test_user_can_register(): void
+    {
         // Act: Submit the registration form with user data
         $response = $this->post("/register", [
-            "name" => "Jaafar",
+            "username" => "Jaafar",
             "email" => "jaafar@example.com",
             "password" => "secret123"
         ]);
@@ -58,7 +61,7 @@ class RegisterPageTest extends TestCase
         // Assert: Verify redirection (successful submission)
         $response->assertStatus(302);
         // Assert: Check if the user record exists in the database
-        $this->assertDatabaseHas("user", [
+        $this->assertDatabaseHas("users", [
             "email" => "jaafar@example.com"
         ]);
     }
