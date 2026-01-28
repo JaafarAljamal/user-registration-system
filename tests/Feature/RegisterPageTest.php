@@ -52,17 +52,35 @@ class RegisterPageTest extends TestCase
     public function test_user_can_register(): void
     {
         // Act: Submit the registration form with user data
-        $response = $this->post("/register", [
-            "username" => "Jaafar",
-            "email" => "jaafar@example.com",
-            "password" => "secret123"
+        $response = $this->post('/register', [
+            'username' => 'Jaafar',
+            'email' => 'jaafar@example.com',
+            'password' => 'secret123'
         ]);
 
         // Assert: Verify redirection (successful submission)
         $response->assertStatus(302);
         // Assert: Check if the user record exists in the database
-        $this->assertDatabaseHas("users", [
-            "email" => "jaafar@example.com"
+        $this->assertDatabaseHas('users', [
+            'email' => 'jaafar@example.com'
         ]);
+    }
+
+    /**
+     * Test if the invalid Email and password values will report errors.
+     *
+     * @return void
+     */
+    public function test_registration_requires_valid_email_and_password(): void
+    {
+        // Insert an invalid Email and a short password for testing
+        $response = $this->post('/register', [
+            'username' => 'Jaafar',
+            'email' => 'not-an-email',
+            'password' => 'short'
+        ]);
+
+        // Assertion that errors will be returned in these fields
+        $response->assertSessionHasErrors('email', 'password');
     }
 }
