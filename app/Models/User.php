@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -46,8 +47,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function profile()
+    /**
+     * Get the profile associated with the user.
+     * 
+     * @return HasOne
+     */
+    public function profile(): HasOne
     {
-        // We will define the relationship logic here in the next step
+        return $this->hasOne(Profile::class);
     }
 }
