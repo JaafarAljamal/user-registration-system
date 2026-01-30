@@ -6,5 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<int, string>
+     */
+    protected $fillable = [
+        'user_id',
+        'bio',
+        'avatar',
+    ];
 }
