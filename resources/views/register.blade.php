@@ -3,8 +3,8 @@
 <form method="POST" action="/register">
     @csrf
 
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name">
+    <label for="username">Name</label>
+    <input type="text" id="username" name="username">
 
     <label for="email">Email</label>
     <input type="email" id="email" name="email">
