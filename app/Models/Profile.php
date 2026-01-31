@@ -18,6 +18,11 @@ class Profile extends Model
         'avatar',
     ];
 
+    /**
+     * Get the user associated with the profile.
+     * 
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
