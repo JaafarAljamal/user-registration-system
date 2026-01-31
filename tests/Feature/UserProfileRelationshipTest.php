@@ -45,4 +45,25 @@ class UserProfileRelationshipTest extends TestCase
         $this->assertEquals('Software Engineer', $retrievedProfile->bio);
         $this->assertEquals($user->id, $profile->user->id);
     }
+
+    /**
+     * Test cascade delete for user profile.
+     *
+     * @return void
+     */
+    public function test_profile_is_deleted_when_user_is_deleted(): void
+    {
+        // Arrange: Create a user and its profile will be created automatically
+        $user = \App\Models\User::create([
+            'username' => 'Jaafar',
+            'email' => 'jaafar@example.com',
+            'password' => 'secret123',
+        ]);
+
+        // Act: Delete the created user
+        $user->delete();
+
+        // Assert: Validate that the associated profile has deleted
+        $this->assertDatabaseMissing('profiles', ['user_id' => $user->id]);
+    }
 }
