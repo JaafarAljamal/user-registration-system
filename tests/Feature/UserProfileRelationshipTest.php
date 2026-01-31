@@ -66,4 +66,27 @@ class UserProfileRelationshipTest extends TestCase
         // Assert: Validate that the associated profile has deleted
         $this->assertDatabaseMissing('profiles', ['user_id' => $user->id]);
     }
+
+    /**
+     * Test that users can view their profile page.
+     *
+     * @return void
+     */
+    public function test_user_can_view_thier_profile_page(): void
+    {
+        // Arrange: Create a user with a profile
+        $user = \App\Models\User::create([
+            'username' => 'Jaafar',
+            'email' => 'jaafar@example.com',
+            'password' => 'secret123',
+        ]);
+
+        // Act: Visit the profile as a user
+        $response = $this->actingAs($user)->get('/profile');
+
+        // Assert: Validate the HTTP status (200 Found) and the data is visible
+        $response->assertStatus(200);
+        $response->assertSee('Jaafar');
+        $response->assertSee('jaafar@example.com');
+    }
 }
