@@ -64,6 +64,10 @@ class RegisterPageTest extends TestCase
         $this->assertDatabaseHas('users', [
             'email' => 'jaafar@example.com'
         ]);
+
+        // // Assert: verify that a profile was created and linked to the user
+        $user = \App\Models\User::where('email', 'jaafar@example.com')->first();
+        $this->assertDatabaseHas('profiles', ['user_id' => $user->id]);
     }
 
     /**
