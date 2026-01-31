@@ -43,5 +43,6 @@ class UserProfileRelationshipTest extends TestCase
         // Assert: verify type and expected data
         $this->assertInstanceOf(\App\Models\Profile::class, $retrievedProfile);
         $this->assertEquals('Software Engineer', $retrievedProfile->bio);
+        $this->assertEquals($user->id, $profile->user->id);
     }
 }
