@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -28,3 +29,8 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::get('/home', function () {
     return view('home');
 })->name('home');
+
+/**
+ * Handle profile viewing requests.
+ */
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
