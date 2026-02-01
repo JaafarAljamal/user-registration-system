@@ -72,7 +72,7 @@ class UserProfileRelationshipTest extends TestCase
      *
      * @return void
      */
-    public function test_user_can_view_thier_profile_page(): void
+    public function test_user_can_view_their_profile_page(): void
     {
         // Arrange: Create a user with a profile
         $user = \App\Models\User::create([
@@ -88,5 +88,32 @@ class UserProfileRelationshipTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Jaafar');
         $response->assertSee('jaafar@example.com');
+    }
+
+    /**
+     * Test that users can update their profile bio.
+     *
+     * @return void
+     */
+    public function test_user_can_update_their_bio(): void
+    {
+        // Arrange: Create a user with a profile
+        $user = \App\Models\User::create([
+            'username' => 'Jaafar',
+            'email' => 'jaafar@example.com',
+            'password' => 'secret123',
+        ]);
+        $newBio = 'I am a professional web developer';
+
+        // Act: Send an update request (PATCH) with bio data as an array
+        $response = $this->actingAs($user)->patch('/profile', [
+            'bio' => $newBio,
+        ]);
+
+        // Assert: Validate changes via successfully redirect and update database
+        $this->assertDatabaseHas('profiles', [
+            'user_id' => $user->id,
+            'bio' => $newBio,
+        ]);
     }
 }
