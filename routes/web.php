@@ -34,3 +34,8 @@ Route::get('/home', function () {
  * Handle profile viewing requests.
  */
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+
+/**
+ * Handle profile bio update request.
+ */
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

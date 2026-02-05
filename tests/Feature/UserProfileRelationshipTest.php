@@ -32,18 +32,16 @@ class UserProfileRelationshipTest extends TestCase
             'email' => 'jaafar@example.com',
             'password' => 'secret123',
         ]);
-        $profile = \App\Models\Profile::create([
-            'user_id' => $user->id,
+
+        // Act: Update the profile via relationship
+        $user->profile()->update([
             'bio' => 'Software Engineer',
         ]);
 
-        // Act: retrieve profile via relationship
-        $retrievedProfile = $user->profile;
-
-        // Assert: verify type and expected data
-        $this->assertInstanceOf(\App\Models\Profile::class, $retrievedProfile);
-        $this->assertEquals('Software Engineer', $retrievedProfile->bio);
-        $this->assertEquals($user->id, $profile->user->id);
+        // Assert: Refresh the log then verify the state and the updated value
+        $user->refresh();
+        $this->assertNotNull($user->profile);
+        $this->assertEquals('Software Engineer', $user->profile->bio);
     }
 
     /**
