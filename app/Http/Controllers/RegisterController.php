@@ -31,8 +31,6 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        $user->profile()->create();
-
         return redirect(route('home'));
     }
 }

@@ -56,4 +56,18 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    /**
+     * Boot the model and define events.
+     *
+     * Automatically creates an empty profile when a new user is created.
+     *
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::created(function (User $user) {
+            $user->profile()->create();
+        });
+    }
 }
