@@ -114,4 +114,18 @@ class UserProfileRelationshipTest extends TestCase
             'bio' => $newBio,
         ]);
     }
+
+    /**
+     * Test guests cannot view the profile page.
+     * 
+     * @return void
+     */
+    public function test_guests_cannot_view_profile_page(): void
+    {
+        // Act: Attempt to enter the profile page without login
+        $response = $this->get('/profile');
+
+        // Assert: Validate that the user is directed to the registration page
+        $response->assertRedirect('/register');
+    }
 }
