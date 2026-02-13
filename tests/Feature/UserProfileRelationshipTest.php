@@ -125,7 +125,7 @@ class UserProfileRelationshipTest extends TestCase
         // Act: Attempt to enter the profile page without login
         $response = $this->get('/profile');
 
-        // Assert: Validate that the user is directed to the registration page
-        $response->assertRedirect('/register');
+        // Assert: Validate that the user is directed to the login page
+        $response->assertRedirect('/login');
     }
 }
