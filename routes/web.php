@@ -26,16 +26,25 @@ Route::get('/register', function () {
  */
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
-
 /**
- * Handle profile viewing requests.
+ * Handle the protected routes that require a login.
  */
-Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+Route::middleware(['auth'])->group(function () {
 
-/**
- * Handle profile bio update request.
- */
-Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    /**
+     * Handle home viewing request.
+     */
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
+
+    /**
+     * Handle profile viewing requests.
+     */
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+
+    /**
+     * Handle profile bio update request.
+     */
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
