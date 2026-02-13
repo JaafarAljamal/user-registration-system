@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
@@ -25,6 +26,8 @@ Route::get('/register', function () {
  * Handle account creation requests.
  */
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.showLoginForm');
 
 /**
  * Handle the protected routes that require a login.
