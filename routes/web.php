@@ -27,7 +27,15 @@ Route::get('/register', function () {
  */
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
+/**
+ * Handle login viewing requests.
+ */
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.showLoginForm');
+
+/**
+ * Handle user login requests.
+ */
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 /**
  * Handle the protected routes that require a login.
