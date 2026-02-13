@@ -45,4 +45,29 @@ class LoginTest extends TestCase
         $response->assertRedirect('/home');
         $this->assertAuthenticatedAs($user);
     }
+
+    /**
+     * Test: Ensure that a user cannot log in with an incorrect password.
+     * 
+     * @return void
+     */
+    public function test_user_cannot_login_with_incorrect_password(): void
+    {
+        // Arrange: Create a user
+        $user = User::created([
+            'username' => 'WrongPassUser',
+            'email' => 'wrong@example.com',
+            'password' => bcrypt('correct123'),
+        ]);
+
+        // Act: Attempt to login via incorrect password
+        $response = $this->post('/login', [
+            'email' => 'wrong@example.com',
+            'password' => 'wrong_password',
+        ]);
+
+        // Assert: Validate staying on the login page with session errors
+        $response->assertSessionHasErrors('email');
+        $this->assertGuest();
+    }
 }
