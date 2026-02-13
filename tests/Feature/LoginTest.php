@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Test: Verify that the login page is accessible.
      */
@@ -18,5 +21,28 @@ class LoginTest extends TestCase
 
         // Assert: Verify that the response status is 200 (OK)
         $response->assertStatus(200);
+    }
+
+    /**
+     * Test: Ensure that a user can successfully log in with valid credentials.
+     * 
+     * @return viod
+     */
+    public function test_user_can_login_with_correct_credentials(): void
+    {
+        // Arrange: Create a test user with password
+        $user = User::create([
+            'username' => 'TestUser',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password123'),
+        ]);
+        // Act: Attempt to login
+        $response = $this->post('/login', [
+            'email' => 'test@example.com',
+            'password' => 'password123',
+        ]);
+        // Assert: Validate the redirection, and the user is registerd
+        $response->assertRedirect('/home');
+        $this->assertAuthenticatedAs($user);
     }
 }
