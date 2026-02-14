@@ -31,7 +31,7 @@ class LoginController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -46,5 +46,22 @@ class LoginController extends Controller
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
+    }
+
+    /**
+     * Log out the currently authenticated user.
+     * 
+     * This method logs out the user, invalidates the current session to prevent reuse,
+     * regenerates the CSRF token for security, and redirects the user to the welcome page.
+     * 
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }

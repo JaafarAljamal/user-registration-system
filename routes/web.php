@@ -61,4 +61,9 @@ Route::middleware(['auth'])->group(function () {
      * Handle profile bio update request.
      */
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    /**
+     * Handle user logout request.
+     */
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
