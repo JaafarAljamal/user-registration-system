@@ -3,39 +3,42 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProfileController;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /**
- * Home Page
+ * Handle the routes that do not require a login.
  */
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['guest'])->group(function () {
+
+    /**
+     * Home Page
+     */
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    /**
+     * Display the registration form.
+     */
+    Route::get('/register', function () {
+        return view('register');
+    });
+
+    /**
+     * Handle account creation requests.
+     */
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+    /**
+     * Handle login viewing requests.
+     */
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.showLoginForm');
+
+    /**
+     * Handle user login requests.
+     */
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
-
-/**
- * Display the registration form.
- */
-Route::get('/register', function () {
-    return view('register');
-});
-
-/**
- * Handle account creation requests.
- */
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
-
-/**
- * Handle login viewing requests.
- */
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.showLoginForm');
-
-/**
- * Handle user login requests.
- */
-Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 /**
  * Handle the protected routes that require a login.
