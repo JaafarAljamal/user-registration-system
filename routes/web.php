@@ -22,7 +22,7 @@ Route::middleware(['guest'])->group(function () {
      */
     Route::get('/register', function () {
         return view('register');
-    });
+    })->name('register');
 
     /**
      * Handle account creation requests.
