@@ -35,7 +35,7 @@ class ProfileController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'bio' => 'required|string|max:500',
+            'bio' => 'nullable|string|max:500',
         ]);
 
         Auth::user()->profile()->update([
