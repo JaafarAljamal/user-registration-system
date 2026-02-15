@@ -63,6 +63,11 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     /**
+     * Handle user account deletion request.
+     */
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('account.destroy');
+
+    /**
      * Handle user logout request.
      */
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
