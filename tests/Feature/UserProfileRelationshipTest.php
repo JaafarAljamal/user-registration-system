@@ -128,4 +128,27 @@ class UserProfileRelationshipTest extends TestCase
         // Assert: Validate that the user is directed to the login page
         $response->assertRedirect('/login');
     }
+
+    /**
+     * Test the ability of the user to delete the account via the route.
+     * 
+     * @return void
+     */
+    public function test_user_can_delete_their_account_via_route(): void
+    {
+        // Arrange: Create a user
+        $user = \App\Models\User::create([
+            'username' => 'DeletableUser',
+            'email' => 'delete@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        // Act: Delete the accoutnt
+        $response = $this->actingAs($user)->delete('/profile');
+
+        // Assert: Validate of the redirection and the data in database
+        $response->assertRedirect('/');
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        $this->assertDatabaseMissing('profiles', ['user_id' => $user->id]);
+    }
 }
