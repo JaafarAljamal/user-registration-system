@@ -10,7 +10,7 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/*  */
+/* Views */
 .hidden {
     display: none;
 }
@@ -23,4 +23,11 @@
     @apply bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition;
 }
 
+/* Error Text and Border */
+.error-message {
+    @apply text-red-600 text-xs mt-1 font-medium;
+}
 
+.input-error {
+    @apply border-red-50 focus:ring-red-500 focus:border-red-500;
+}

@@ -6,15 +6,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoDiv = document.getElementById('profile-info');
     const editSection = document.getElementById('edit-bio-section');
 
-    if (editBtn && cancleBtn) {
-        editBtn.addEventListener('click', () => {
-            infoDiv.classList.add('hidden');
-            editSection.classList.remove('hidden');
-        });
+    // Appear the edit form
+    const showForm = () => {
+        infoDiv.classList.add('hidden');
+        editSection.classList.remove('hidden');
+    }
 
-        cancleBtn.addEventListener('click', () => {
-            infoDiv.classList.remove('hidden');
-            editSection.classList.add('hidden');
-        });
+    // Hide the edit form
+    const hideForm = () => {
+        infoDiv.classList.remove('hidden');
+        editSection.classList.add('hidden');
+    }
+
+    // Add event lestiners for buttons
+    if (editBtn && cancleBtn) {
+        editBtn.addEventListener('click', showForm);
+        cancleBtn.addEventListener('click', hideForm);
+    }
+
+    // If there is a validation error, the form will remain visible
+    if (document.querySelector('.text-red-600')) {
+        showForm();
     }
 });

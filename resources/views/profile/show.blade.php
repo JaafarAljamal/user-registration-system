@@ -18,11 +18,22 @@
             @csrf
             @method('PATCH')
 
-            <label for="bio">Update Your Bio</label> <br>
-            <textarea name="bio" id="bio">{{ old('bio', $user->profile->bio) }}</textarea>
+            <label for="bio" class="block font-medium">Update Your Bio</label> <br>
+            <textarea 
+                name="bio" 
+                id="bio" 
+                rows="4"
+                class="w-full border rounded-md p-2 @error('bio') border-red-500 @enderror"
+            >
+                {{ old('bio', $user->profile->bio) }}
+            </textarea>
 
-            <button type="submit">Save</button>
-            <button type="button" id="hide-edit-form">Cancle</button>
+            @error('bio')
+                <p class="text-red-600 text-xs mt-1 font-medium">{{$message}}</p>
+            @enderror
+
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save</button>
+            <button type="button" id="hide-edit-form" class="text-gray-600 ml-2 cursor-pointer">Cancle</button>
         </form>
     </div>
 
