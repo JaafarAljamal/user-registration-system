@@ -6,16 +6,18 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /**
+ * Welcome Page
+ */
+Route::get('/', function () {
+    return view('welcome');
+});
+
+/**
  * Handle the routes that do not require a login.
  */
 Route::middleware(['guest'])->group(function () {
 
-    /**
-     * Home Page
-     */
-    Route::get('/', function () {
-        return view('welcome');
-    });
+
 
     /**
      * Display the registration form.
