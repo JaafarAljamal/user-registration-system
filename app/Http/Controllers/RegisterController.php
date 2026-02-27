@@ -16,7 +16,7 @@ class RegisterController extends Controller
      *
      * This method validates the incoming registration data, creates a new
      * User record with the provided credentials, login the user, and finally 
-     * redirects the user to the home route.
+     * redirects the user to the dashboard route.
      *
      * @param RegisterRequest
      * @return RedirectResponse
@@ -34,6 +34,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('home'));
+        return redirect(route('dashboard'));
     }
 }

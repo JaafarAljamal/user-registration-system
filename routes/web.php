@@ -48,11 +48,11 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     /**
-     * Handle home viewing request.
+     * Handle dashboard viewing request.
      */
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
     /**
      * Handle profile viewing requests.
