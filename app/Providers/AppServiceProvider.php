@@ -22,5 +22,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Define an alias for guest-layout component
         Blade::component('layouts.guest', 'guest-layout');
+
+        // Define an alias for app-layout component
+        Blade::component('layouts.app', 'app-layout');
     }
 }

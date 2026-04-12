@@ -18,14 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
         editSection.classList.add('hidden');
     }
 
-    // Add event lestiners for buttons
-    if (editBtn && cancleBtn) {
+    // Add event lestiners for buttons after validation that the page is correct
+    if (editBtn && infoDiv && editSection) {
         editBtn.addEventListener('click', showForm);
-        cancleBtn.addEventListener('click', hideForm);
-    }
-
-    // If there is a validation error, the form will remain visible
-    if (document.querySelector('.text-red-600')) {
-        showForm();
+        if (cancleBtn) {
+            cancleBtn.addEventListener('click', hideForm);
+        }
+        // If there is a validation error, the form will remain visible
+        if (editSection.querySelector('.text-red-600')) {
+            showForm();
+        }
     }
 });

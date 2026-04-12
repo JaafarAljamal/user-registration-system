@@ -9,15 +9,15 @@
         'secondary' => "text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:ring-indigo-500",
     ];
 
-    $classes = $baseClasses . ' ' . ($variants[$variant] ?? $variants['primary']);
+    $selectedVariant = $variants[$variant] ?? $variants['primary'];
 @endphp
 
 @if($href)
-    <a href="{{ $href }}" {{ $attributes->merge(['class' => $classes]) }} style="text-decoration: none;">
+    <a href="{{ $href }}" {{ $attributes->merge(['class' => "$baseClasses $selectedVariant"]) }} style="text-decoration: none;">
         {{ $slot }}
     </a>
 @else
-    <button type="{{ $type }}" {{ $attributes->merge(['class' => $classes]) }}>
+    <button type="{{ $type }}" {{ $attributes->merge(['class' => "$baseClasses $selectedVariant"]) }}>
         {{ $slot }}
     </button>
 @endif

@@ -1,45 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'My App')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link rel="stylesheet" href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <nav>
-        <a href="/">Home</a>
-        @auth()
-            <a href="{{route('home')}}">Dashboard</a>
-            <a href="{{route('profile.show')}}">Profile</a>
-            <a
-                href="#" 
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                Logout
-            </a>
-            <form method="POST" action="{{route('logout')}}" id="logout-form" style="display: none;">
-                @csrf
-            </form>
-        @endauth
+<body class="font-sans text-slate-900 antialiased bg-slate-50">
+    <div class="min-h-screen">
+        @include('layouts.navigation')
+        @isset($header)
+            <header class="bg-white shadow-sm">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endisset
 
-        @guest()
-            <a href="{{route('login.showLoginForm')}}">Login</a>
-            <a href="{{route('register')}}">Register</a>
-        @endguest
-    </nav>
-    <main>
-        @if (session('status'))
-            <div id="status-alert" class="alert alert-success">
-                {{session('status')}}
+        <main class="py-12">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                {{ $slot }}
             </div>
-        @endif
-
-        @yield('content')
-    </main>
-    
-    <footer>
-        <p>&copy; 2026 User System</p>
-    </footer>
+        </main>
+    </div>
 </body>
 </html>

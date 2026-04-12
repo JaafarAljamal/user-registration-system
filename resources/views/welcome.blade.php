@@ -10,7 +10,7 @@
         <div class="flex gap-4 justify-center mt-10">
             @if (Route::has('login'))
                 @auth
-                    <x-button href="{{ url('/home') }}">
+                    <x-button href="{{ url('/dashboard') }}">
                         🏠 Home
                     </x-button>
                 @else

@@ -1,9 +1,17 @@
-@extends('layouts.app')
-@section('title', 'Home Page')
-@section('content')
-    <div class="container">
-        <h1>Welcome to User Registration System!</h1>
-        <p>You have successfully loged in.</p>
-        <a href="{{route('profile.show')}}" class="btn btn-primary">View my profile</a>
+<x-app-layout>
+    <x-slot name="header">
+        <h2>
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-slate-900">
+                    {{ __("You're logged in as ") }} <strong>{{ Auth::user()->username }}</strong>!
+                </div>
+            </div>
+        </div>
     </div>
-@endsection
+</x-app-layout>
