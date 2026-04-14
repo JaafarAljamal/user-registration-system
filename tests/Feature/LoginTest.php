@@ -42,7 +42,7 @@ class LoginTest extends TestCase
             'password' => 'password123',
         ]);
         // Assert: Validate the redirection, and the user is registerd
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($user);
     }
 
