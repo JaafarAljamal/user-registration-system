@@ -60,12 +60,11 @@
 
             <div class="p-6 bg-white shadow sm:rounded-lg border-l-4 border-red-500">
                 <h3 class="text-lg font-medium text-red-600 mb-4">Delete your account:</h3>
-                <form method="POST" action="{{ route('account.destroy') }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Delete Account</button>
-                </form>
+                <button type="button" onclick="showModal()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                    Delete Account
+                </button>
             </div>
+            <x-confirmation-modal />
         </div>
     </div>
 </x-app-layout>
