@@ -30,3 +30,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+/**
+ * Function to show the Modal.
+ * Bind the function to window so that it becomes global and the browser can find it.
+ */
+window.showModal = function() {
+    const modal = document.getElementById('confirmation-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
+}
+
+/**
+ * Function to hide the Modal.
+ * Bind the function to window so that it becomes global and the browser can find it.
+ */
+window.hideModal = function() {
+    const modal = document.getElementById('confirmation-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
