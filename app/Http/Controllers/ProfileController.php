@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -26,19 +27,16 @@ class ProfileController extends Controller
     /**
      * Update the authenticated user's profile bio.
      * 
-     * This methoe validates the incoming request data, updates the user's profile
-     * with the new bio, redirects back to the profile page.
+     * This methoe recieves the validated data from UpdateProfileRequest, updates the user's 
+     * profile with the new bio and avatar, redirects back to the profile page.
      * 
      * @param Request
      * @return RedirectResponse
      */
-    public function update(Request $request): RedirectResponse
+    public function update(UpdateProfileRequest $request): RedirectResponse
     {
         // Data validation
-        $data = $request->validate([
-            'bio' => 'nullable|string|max:500',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        $data = $request->validated();
 
         // Image upload process if found
         if ($request->hasFile('avatar')) {
