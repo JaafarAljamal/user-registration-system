@@ -34,13 +34,19 @@ class ProfileController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
+        // Data validation
         $data = $request->validate([
             'bio' => 'nullable|string|max:500',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        Auth::user()->profile()->update([
-            'bio' => $data['bio'],
-        ]);
+        // Image upload process if found
+        if ($request->hasFile('avatar')) {
+            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+        }
+
+        // Update data by the sent fields only
+        Auth::user()->profile()->update($data);
 
         return redirect()->route('profile.show');
     }
