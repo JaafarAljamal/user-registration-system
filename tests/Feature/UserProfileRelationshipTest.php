@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserProfileRelationshipTest extends TestCase
@@ -150,5 +153,30 @@ class UserProfileRelationshipTest extends TestCase
         $response->assertRedirect('/');
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
         $this->assertDatabaseMissing('profiles', ['user_id' => $user->id]);
+    }
+
+    /**
+     * Test the ability of the user to upload an avatar.
+     * 
+     * @return void
+     */
+    public function test_user_can_upload_an_avatar(): void
+    {
+        // Arrange: Create a fake file system, a random user, and a fake image file
+        Storage::fake('public');
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg');
+
+        // Act: Act as the user and send a PATCH request to the profile update route
+        $response = $this->actingAs($user)->patch(route('profile.update'), [
+            'avatar' => $file,
+        ]);
+
+        // Assert: Check if the user is redirected back, the avatar field in the database 
+        // is not null, and the file exists on the disk using the stored path
+        $response->assertRedirect();
+        $user->refresh(); // Refresh the user and its profile from the database
+        $this->assertNotNull($user->profile->avatar);
+        Storage::disk('public')->assertExists($user->profile->avatar);
     }
 }
