@@ -24,6 +24,23 @@
                     </button>
                 </form>
             </div>
+            <div class="-me-2 flex items-center sm:hidden">
+                <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none transition">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path id="hamburger-icon" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden sm:hidden bg-white border-t border-slate-200">
+        <div class="pt-2 pb-3 space-y-1">
+            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                Home
+            </x-nav-link>
+            <x-nav-link :href="route('profile.show')" :active="request()->routeIs('profile.show')" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                Profile
+            </x-nav-link>
         </div>
     </div>
 </nav>
