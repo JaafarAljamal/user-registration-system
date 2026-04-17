@@ -29,6 +29,28 @@ document.addEventListener('DOMContentLoaded', () => {
             showForm();
         }
     }
+
+    const avatarInput = document.getElementById('avatar');
+    const preview = document.getElementById('preview');
+    const placeholder = document.getElementById('placeholder');
+
+    // Edit avatar
+    if (avatarInput && preview) {
+        avatarInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    if (placeholder) {
+                        placeholder.classList.add('hidden');
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 });
 
 /**

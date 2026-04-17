@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -38,9 +39,14 @@ class ProfileController extends Controller
         // Data validation
         $data = $request->validated();
 
-        // Image upload process if found
+        // Image upload process if found, and delete the old one
         if ($request->hasFile('avatar')) {
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $oldAvatar = Auth::user()->profile->avatar;
+            if ($oldAvatar) {
+                Storage::disk('public')->delete($oldAvatar);
+            }
+            $data['avatar'] = $path;
         }
 
         // Update data by the sent fields only

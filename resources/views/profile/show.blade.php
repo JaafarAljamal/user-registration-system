@@ -28,18 +28,38 @@
                         </div>
 
                         <x-button id="show-edit-form">
-                            Edit Bio
+                            Edit Profile
                         </x-button>
                     </div>
                 </div>
             </div>
 
             <div id="edit-bio-section" class="hidden p-6 bg-white shadow sm:rounded-lg">
-                <form method="POST" action="{{ route('profile.update') }}">
+                <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
 
-                    <label for="bio" class="block font-medium text-slate-700 mb-2">Update Your Bio</label>
+                    <div>
+                        <div>
+                            @if(Auth::user()->profile->avatar)
+                                <img id="preview" src="{{ asset('storage/' . Auth::user()->profile->avatar) }}" class="h-16 w-16 rounded-full object-cover border">
+                            @else
+                                <div id="placeholder" class="h-16 w-16 rounded-full bg-slate-200 flex items-center justify-center">
+                                    <svg class="h-8 w-8 text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                </div>
+                                <img id="preview" class="hidden h-16 w-16 rounded-full object-cover border">
+                            @endif
+                        </div>
+                        <div>
+                            <label for="avatar" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">
+                                {{ __('Change photo') }}
+                                <input type="file" name="avatar" id="avatar" class="hidden">
+                            </label>
+                            <p class="text-xs text-slate-500">JPG, PNG (Max 2MB)</p>
+                        </div>
+                    </div>
+
+                    <label for="bio" class="block font-medium text-slate-700 mb-2 mt-2">Update Your Bio</label>
                     <textarea
                         name="bio"
                         id="bio"
@@ -68,4 +88,3 @@
         </div>
     </div>
 </x-app-layout>
-
